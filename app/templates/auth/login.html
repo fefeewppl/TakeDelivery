@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Entrar{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h3 class="text-center mb-0">Entrar</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('auth.login') }}">
+                    {{ form.hidden_tag() }}
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        {{ form.email(class="form-control", id="email") }}
+                        {% for error in form.email.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Senha</label>
+                        {{ form.password(class="form-control", id="password") }}
+                        {% for error in form.password.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3 form-check">
+                        {{ form.remember(class="form-check-input", id="remember") }}
+                        <label class="form-check-label" for="remember">Lembrar de mim</label>
+                    </div>
+                    <div class="d-grid">
+                        {{ form.submit(class="btn btn-danger", value="Entrar") }}
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center">
+                <p class="mb-0">Não tem uma conta? <a href="{{ url_for('auth.register') }}" class="text-danger">Cadastre-se</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

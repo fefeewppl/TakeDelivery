@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Cadastrar Restaurante{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h3 class="mb-0">Cadastre seu Restaurante</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="name" class="form-label">Nome do Restaurante</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="phone" class="form-label">Telefone</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Endereço</label>
+                        <input type="text" class="form-control" id="address" name="address" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Descrição</label>
+                        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="delivery_fee" class="form-label">Taxa de Entrega (R$)</label>
+                            <input type="number" class="form-control" id="delivery_fee" name="delivery_fee" step="0.01" min="0" value="0">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="min_order" class="form-label">Pedido Mínimo (R$)</label>
+                            <input type="number" class="form-control" id="min_order" name="min_order" step="0.01" min="0" value="0">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Imagem do Restaurante</label>
+                        <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label for="logo">Restaurant Logo</label>
+                        <input type="file" class="form-control-file" id="logo" name="logo">
+                    </div>
+                    
+                    <!-- Submit button -->
+                </form>
+            </div>
+            <div class="card-footer">
+                <a href="{{ url_for('main.index') }}" class="btn btn-secondary">Voltar para Início</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

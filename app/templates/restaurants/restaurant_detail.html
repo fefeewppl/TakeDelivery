@@ -1,0 +1,11 @@
+<!-- In the product card where the "Add to Cart" button is -->
+<form action="{{ url_for('orders.add_to_cart') }}" method="POST">
+    <input type="hidden" name="product_id" value="{{ product.id }}">
+    <input type="hidden" name="restaurant_id" value="{{ restaurant.id }}">
+    <div class="input-group mb-3">
+        <input type="number" name="quantity" class="form-control" value="1" min="1" max="10">
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+        </button>
+    </div>
+</form>

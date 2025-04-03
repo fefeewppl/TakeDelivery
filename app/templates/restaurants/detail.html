@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}{{ restaurant.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Change restaurant.image to restaurant.logo -->
+            <img src="{{ url_for('static', filename='uploads/' + restaurant.logo if restaurant.logo else 'default_restaurant.jpg') }}" class="img-fluid rounded" alt="{{ restaurant.name }}">
+        </div>
+        <div class="col-md-8">
+            <h1>{{ restaurant.name }}</h1>
+            <p class="lead">{{ restaurant.description }}</p>
+            <p><i class="fas fa-map-marker-alt"></i> {{ restaurant.address }}</p>
+            <p><i class="fas fa-phone"></i> {{ restaurant.phone }}</p>
+            <p><i class="fas fa-truck"></i> Taxa de entrega: R$ {{ "%.2f"|format(restaurant.delivery_fee) }}</p>
+            <p><i class="fas fa-shopping-basket"></i> Pedido mínimo: R$ {{ "%.2f"|format(restaurant.min_order) }}</p>
+        </div>
+    </div>
+</div>
+
+<h2 class="mb-3">Cardápio</h2>
+
+{% if categories %}
+    {% for category in categories %}
+    <div class="card mb-4">
+        <div class="card-header bg-danger text-white">
+            <h3 class="mb-0">{{ category.name }}</h3>
+        </div>
+        <div class="card-body">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                {% for product in products if product.category_id == category.id %}
+                <div class="col">
+                    <div class="card h-100 product-card">
+                        <img src="{{ url_for('static', filename='uploads/' + product.image) }}" class="card-img-top" alt="{{ product.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">{{ product.description }}</p>
+                            <p class="card-text"><strong>R$ {{ "%.2f"|format(product.price) }}</strong></p>
+                        </div>
+                        <div class="card-footer">
+                            <form method="POST" action="{{ url_for('orders.add_to_cart') }}">
+                                <input type="hidden" name="product_id" value="{{ product.id }}">
+                                <input type="hidden" name="restaurant_id" value="{{ restaurant.id }}">
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text">Qtd</span>
+                                    <input type="number" class="form-control" name="quantity" value="1" min="1" max="10">
+                                </div>
+                                <button type="submit" class="btn btn-danger w-100">Adicionar ao Carrinho</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="col-12">
+                    <p class="text-muted">Nenhum produto nesta categoria.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+<div class="alert alert-info">
+    Este restaurante ainda não possui categorias ou produtos cadastrados.
+</div>
+{% endif %}
+
+<div class="mt-4">
+    <a href="{{ url_for('main.index') }}" class="btn btn-secondary">Voltar para Restaurantes</a>
+</div>
+{% endblock %}

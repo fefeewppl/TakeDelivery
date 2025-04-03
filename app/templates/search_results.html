@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results for "{{ query }}"{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Search Results for "{{ query }}"</h2>
+
+<div class="row">
+    {% for restaurant in restaurants %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            {% if restaurant.image %}
+            <img src="{{ url_for('static', filename='uploads/' + restaurant.image) }}" class="card-img-top" alt="{{ restaurant.name }}">
+            {% else %}
+            <img src="{{ url_for('static', filename='images/default_restaurant.jpg') }}" class="card-img-top" alt="{{ restaurant.name }}">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ restaurant.name }}</h5>
+                <p class="card-text">{{ restaurant.description|truncate(100) }}</p>
+                <p class="card-text">
+                    <small class="text-muted">
+                        Delivery fee: ${{ restaurant.delivery_fee }}
+                        {% if restaurant.min_order > 0 %}
+                        | Min. order: ${{ restaurant.min_order }}
+                        {% endif %}
+                    </small>
+                </p>
+            </div>
+            <div class="card-footer">
+                <a href="{{ url_for('restaurants.restaurant_detail', restaurant_id=restaurant.id) }}" class="btn btn-primary">View Menu</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12">
+        <div class="alert alert-info">No restaurants found matching "{{ query }}".</div>
+    </div>
+    {% endfor %}
+</div>
+
+<a href="{{ url_for('main.index') }}" class="btn btn-secondary">Back to Home</a>
+{% endblock %}

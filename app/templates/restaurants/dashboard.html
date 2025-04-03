@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Restaurant Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Update this section to properly display the logo -->
+            {% if restaurant.logo %}
+                <img src="{{ url_for('static', filename='uploads/' + restaurant.logo) }}" class="img-fluid rounded" alt="{{ restaurant.name }}" style="max-height: 200px;">
+            {% else %}
+                <img src="{{ url_for('static', filename='uploads/default_restaurant.jpg') }}" class="img-fluid rounded" alt="{{ restaurant.name }}" style="max-height: 200px;">
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <h2>{{ restaurant.name }}</h2>
+            <p>{{ restaurant.description }}</p>
+            <!-- Rest of the restaurant details -->
+        </div>
+    </div>
+    
+    <!-- Rest of the dashboard content -->
+</div>
+{% endblock %}

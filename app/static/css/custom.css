@@ -1,0 +1,129 @@
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, #ff6b6b 0%, #e41e25 100%);
+    color: white;
+    border-radius: 0.5rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 0;
+}
+
+.hero-section::after {
+    content: '';
+    position: absolute;
+    bottom: -80px;
+    left: -80px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 0;
+}
+
+.hero-section .container {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-section h1, 
+.hero-section h2, 
+.hero-section p {
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hero-section .btn-primary {
+    background-color: white;
+    border-color: white;
+    color: #e41e25;
+    font-weight: 600;
+}
+
+.hero-section .btn-primary:hover {
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+    color: #e41e25;
+}
+
+.hero-section .btn-outline-primary {
+    color: white;
+    border-color: white;
+}
+
+.hero-section .btn-outline-primary:hover {
+    background-color: white;
+    border-color: white;
+    color: #e41e25;
+}
+
+/* Feature Icons */
+.feature-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+}
+
+/* Restaurant Cards */
+.restaurant-card {
+    transition: transform 0.3s ease;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-5px);
+}
+
+.restaurant-img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.restaurant-img-placeholder {
+    height: 200px;
+}
+
+/* Custom Buttons */
+.btn-primary {
+    background-color: #ff6b6b;
+    border-color: #ff6b6b;
+}
+
+.btn-primary:hover {
+    background-color: #ff5252;
+    border-color: #ff5252;
+}
+
+.btn-outline-primary {
+    color: #ff6b6b;
+    border-color: #ff6b6b;
+}
+
+.btn-outline-primary:hover {
+    background-color: #ff6b6b;
+    border-color: #ff6b6b;
+}
+
+.text-primary {
+    color: #ff6b6b !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-section {
+        text-align: center;
+    }
+}

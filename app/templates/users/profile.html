@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Meu Perfil{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Meu Perfil</h1>
+    
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Informações Pessoais</h5>
+        </div>
+        <div class="card-body">
+            <p><strong>Nome:</strong> {{ user.name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Telefone:</strong> {{ user.phone or 'Não informado' }}</p>
+            <a href="{{ url_for('users.edit_profile') }}" class="btn btn-primary">Editar Perfil</a>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Endereços</h5>
+        </div>
+        <div class="card-body">
+            {% if user.addresses %}
+                <ul class="list-group">
+                {% for address in user.addresses %}
+                    <li class="list-group-item">
+                        {{ address.street }}, {{ address.number }} 
+                        {% if address.complement %}- {{ address.complement }}{% endif %}
+                        <br>
+                        {{ address.neighborhood }}, {{ address.city }} - {{ address.state }}
+                        <br>
+                        CEP: {{ address.zipcode }}
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>Você ainda não cadastrou nenhum endereço.</p>
+            {% endif %}
+            <a href="{{ url_for('users.add_address') }}" class="btn btn-primary mt-3">Adicionar Endereço</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

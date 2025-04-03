@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Restaurant Orders{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Restaurant Orders</h1>
+
+<div class="mb-3">
+    <div class="btn-group" role="group">
+        <a href="{{ url_for('orders.restaurant_orders') }}" class="btn btn-outline-primary {% if not request.args.get('status') %}active{% endif %}">All</a>
+        <a href="{{ url_for('orders.restaurant_orders', status='pending') }}" class="btn btn-outline-warning {% if request.args.get('status') == 'pending' %}active{% endif %}">Pending</a>
+        <a href="{{ url_for('orders.restaurant_orders', status='confirmed') }}" class="btn btn-outline-info {% if request.args.get('status') == 'confirmed' %}active{% endif %}">Confirmed</a>
+        <a href="{{ url_for('orders.restaurant_orders', status='preparing') }}" class="btn btn-outline-primary {% if request.args.get('status') == 'preparing' %}active{% endif %}">Preparing</a>
+        <a href="{{ url_for('orders.restaurant_orders', status='out_for_delivery') }}" class="btn btn-outline-secondary {% if request.args.get('status') == 'out_for_delivery' %}active{% endif %}">Out for Delivery</a>
+        <a href="{{ url_for('orders.restaurant_orders', status='delivered') }}" class="btn btn-outline-success {% if request.args.get('status') == 'delivered' %}active{% endif %}">Delivered</a>
+        <a href="{{ url_for('orders.restaurant_orders', status='cancelled') }}" class="btn btn-outline-danger {% if request.args.get('status') == 'cancelled' %}active{% endif %}">Cancelled</a>
+    </div>
+</div>
+
+{% if orders %}
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.customer.username }}</td>
+                <td>${{ order.total }}</td>
+                <td>
+                    <span class="badge 
+                        {% if order.status == 'pending' %}bg-warning
+                        {% elif order.status == 'confirmed' %}bg-info
+                        {% elif order.status == 'preparing' %}bg-primary
+                        {% elif order.status == 'out_for_delivery' %}bg-secondary
+                        {% elif order.status == 'delivered' %}bg-success
+                        {% elif order.status == 'cancelled' %}bg-danger
+                        {% endif %}">
+                        {{ order.status|capitalize }}
+                    </span>
+                </td>
+                <td>{{ order.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td>
+                    <a href="{{ url_for('orders.order_detail', order_id=order.id) }}" class="btn btn-sm btn-primary">View</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info">
+    No orders found.
+</div>
+{% endif %}
+
+<a href="{{ url_for('restaurants.dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+{% endblock %}
